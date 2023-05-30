@@ -7,6 +7,11 @@ pygame.init()
 # Création de la fenêtre pour afficher le jeu
 window = pygame.display.set_mode((800, 600))
 
+# Modifier le titre et l'icone de la fenêtre
+pygame.display.set_caption("My space invaders")
+windowIcon = pygame.image.load("alien.png")
+pygame.display.set_icon(windowIcon)
+
 
 # La boucle de jeu
 running = True
