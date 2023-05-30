@@ -16,13 +16,16 @@ pygame.display.set_icon(windowIcon)
 # La boucle de jeu
 running = True
 while running:
+    # Couleur de l'écran
+    window.fill((0, 0, 0))
     # On check tous les événements (clavier ou souris)
     for event in pygame.event.get():
         # On teste si l'utilisateur click sur la croix de la fenêtre
         if event.type == pygame.QUIT:
             # Si c'est le cas on met la variable running à False
             running = False
-
+    # On dessine / mettre à jour le contenu de l'écran
+    pygame.display.flip()
 
 # On quitte pygame
 pygame.quit()
