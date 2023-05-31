@@ -12,6 +12,14 @@ pygame.display.set_caption("My space invaders")
 windowIcon = pygame.image.load("alien.png")
 pygame.display.set_icon(windowIcon)
 
+# On charge l'image du joueur
+player = pygame.image.load("player.png")
+# On convertie l'image du joueur en rectangle
+playerRect = player.get_rect()
+#  Position du joueur
+posX = 350
+posY = 480
+
 
 # La boucle de jeu
 running = True
@@ -24,6 +32,14 @@ while running:
         if event.type == pygame.QUIT:
             # Si c'est le cas on met la variable running à False
             running = False
+
+
+    # Affichage joueur
+    #  On applique cette position au rectangle du joueur
+    playerRect.topleft = (posX, posY)
+    # On affiche l'image du joueur dans la fenêtre de jeu
+    window.blit(player, playerRect)
+
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
 
