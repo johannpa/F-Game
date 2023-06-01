@@ -30,11 +30,26 @@ while running:
     window.blit(bg, (0, 0))
     # On check tous les événements (clavier ou souris)
     for event in pygame.event.get():
+        # Est ce que l'utilisateur appuie sur une touche du clavier ?
+        pressed = pygame.key.get_pressed()
         # On teste si l'utilisateur click sur la croix de la fenêtre
         if event.type == pygame.QUIT:
             # Si c'est le cas on met la variable running à False
             running = False
+        # On teste si l'utilisateur appuie sur une touche du clavier exemple de déplacement cran par cran (pas fluide)
+        # On va utiliser une autre méthode pour gérer les touches du clavier
+        """if event.type == pygame.KEYDOWN:
+            # De quelle touche s'agit-il ?
+            if event.key == pygame.K_LEFT:
+                # On déplace le joueur vers la gauche
+                posX -= 50
+            if event.key == pygame.K_RIGHT:
+                # On déplace le joueur vers la droite
+                posX += 50"""
 
+    # Gestion du déplacement du joueur
+    if pressed[pygame.K_LEFT]: posX -= 2
+    if pressed[pygame.K_RIGHT]: posX += 2
 
     # Affichage joueur
     #  On applique cette position au rectangle du joueur
