@@ -19,13 +19,15 @@ playerRect = player.get_rect()
 #  Position du joueur
 posX = 350
 posY = 480
-
+# Image de background
+bg = pygame.image.load("bg.png")
 
 # La boucle de jeu
 running = True
 while running:
     # Couleur de l'écran
     window.fill((0, 0, 0))
+    window.blit(bg, (0, 0))
     # On check tous les événements (clavier ou souris)
     for event in pygame.event.get():
         # On teste si l'utilisateur click sur la croix de la fenêtre
@@ -39,7 +41,6 @@ while running:
     playerRect.topleft = (posX, posY)
     # On affiche l'image du joueur dans la fenêtre de jeu
     window.blit(player, playerRect)
-
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
 
