@@ -21,7 +21,12 @@ posX = 350
 posY = 480
 # Image de background
 bg = pygame.image.load("bg.png")
+playerSpeed = 5
 
+
+
+# Pour définir les FPS (Frame Per Second) du jeu ou image par secondes sur l'écran
+clock = pygame.time.Clock()
 # La boucle de jeu
 running = True
 while running:
@@ -48,8 +53,10 @@ while running:
                 posX += 50"""
 
     # Gestion du déplacement du joueur
-    if pressed[pygame.K_LEFT]: posX -= 2
-    if pressed[pygame.K_RIGHT]: posX += 2
+    if pressed[pygame.K_LEFT] and posX > 0:  # Si la touche gauche est pressée et que la position en X est supérieur à 0
+        posX -= playerSpeed # On déplace le joueur vers la gauche
+    if pressed[pygame.K_RIGHT] and posX < 700: # Si la touche droite est pressée et que la position en X est inférieur à 700 donc 800 - 100 (la taille du joueur)
+        posX += playerSpeed
 
     # Affichage joueur
     #  On applique cette position au rectangle du joueur
@@ -58,6 +65,7 @@ while running:
     window.blit(player, playerRect)
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
+    clock.tick(60)
 
 # On quitte pygame
 pygame.quit()
