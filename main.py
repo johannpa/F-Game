@@ -23,6 +23,12 @@ posY = 480
 bg = pygame.image.load("bg.png")
 playerSpeed = 5
 
+# Image pour le laser de notre joueur
+laser = pygame.image.load("laser.png")
+laserSpeed = 4
+posLaserX = 0
+posLaserY = -100
+canShoot = True
 
 
 # Pour définir les FPS (Frame Per Second) du jeu ou image par secondes sur l'écran
@@ -52,6 +58,17 @@ while running:
                 # On déplace le joueur vers la droite
                 posX += 50"""
 
+        # Detection barre d'espace pour tirer un laser
+        if event.type == pygame.KEYDOWN:
+            # De quelle touche s'agit-il ?
+            if event.key == pygame.K_SPACE and canShoot:
+                canShoot = False
+                # Position du laser
+                posLaserX = posX + 45
+                # On déplace le laser vers le haut du vaisseau
+                posLaserY = posY - 50
+            
+
     # Gestion du déplacement du joueur
     if pressed[pygame.K_LEFT] and posX > 0:  # Si la touche gauche est pressée et que la position en X est supérieur à 0
         posX -= playerSpeed # On déplace le joueur vers la gauche
@@ -63,6 +80,14 @@ while running:
     playerRect.topleft = (posX, posY)
     # On affiche l'image du joueur dans la fenêtre de jeu
     window.blit(player, playerRect)
+
+    # Gestion du laser
+    posLaserY -= laserSpeed
+    window.blit(laser, (posLaserX, posLaserY))
+    if posLaserY < -40:
+        canShoot = True
+
+
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
     clock.tick(60)
