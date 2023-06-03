@@ -1,3 +1,4 @@
+import random
 # Importation de pygame
 import pygame
 
@@ -29,6 +30,13 @@ laserSpeed = 4
 posLaserX = 0
 posLaserY = -100
 canShoot = True
+
+# L'OVNI ennemi
+ovni = pygame.image.load("ufoGreen.png")
+ovniSpeed = 2
+posOvniX = random.randint(1, 750)
+posOvniY = 50
+
 
 
 # Pour définir les FPS (Frame Per Second) du jeu ou image par secondes sur l'écran
@@ -87,6 +95,12 @@ while running:
     if posLaserY < -40:
         canShoot = True
 
+    # Gestion de l'OVNI
+    posOvniX -= ovniSpeed
+    window.blit(ovni, (posOvniX, posOvniY))
+    if posOvniX < 0 or posOvniX > 710:
+        ovniSpeed = -ovniSpeed
+        posOvniY += 50
 
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
