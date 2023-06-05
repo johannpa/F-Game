@@ -26,6 +26,7 @@ playerSpeed = 5
 
 # Image pour le laser de notre joueur
 laser = pygame.image.load("laser.png")
+laserRect = laser.get_rect()
 laserSpeed = 4
 posLaserX = 0
 posLaserY = -100
@@ -33,11 +34,27 @@ canShoot = True
 
 # L'OVNI ennemi
 ovni = pygame.image.load("ufoGreen.png")
+ovniRect = ovni.get_rect()
 ovniSpeed = 2
 posOvniX = random.randint(1, 750)
 posOvniY = 50
 
-
+# Fonction de detection de collision
+def collision(rectA, rectB):
+    if rectB.right < rectA.left:
+        # rectB est à gauche
+        return False
+    if rectB.bottom < rectA.top:
+        # rectB est au dessus
+        return False
+    if rectB.left > rectA.right:
+        # rectB est à droite
+        return False
+    if rectB.top > rectA.bottom:
+        # rectB est en dessous
+        return False
+    # Dans tous les autres cas il y a collision
+    return True
 
 # Pour définir les FPS (Frame Per Second) du jeu ou image par secondes sur l'écran
 clock = pygame.time.Clock()
@@ -91,16 +108,29 @@ while running:
 
     # Gestion du laser
     posLaserY -= laserSpeed
-    window.blit(laser, (posLaserX, posLaserY))
+    laserRect.topleft = (posLaserX, posLaserY)
+    window.blit(laser, laserRect)
     if posLaserY < -40:
         canShoot = True
 
     # Gestion de l'OVNI
     posOvniX -= ovniSpeed
-    window.blit(ovni, (posOvniX, posOvniY))
+    ovniRect.topleft = (posOvniX, posOvniY)
+    window.blit(ovni, ovniRect)
     if posOvniX < 0 or posOvniX > 710:
         ovniSpeed = -ovniSpeed
         posOvniY += 50
+
+    # Detection de collision entre le laser et l'OVNI
+    if collision(laserRect, ovniRect):
+        posOvniY = 10000
+        posLaserY = -100
+
+    # Detection de collision entre le joueur et l'OVNI
+    if collision(playerRect, ovniRect):
+        posOvniY = 10000
+        posY = - 10000
+
 
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
