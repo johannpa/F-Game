@@ -33,11 +33,28 @@ posLaserY = -100
 canShoot = True
 
 # L'OVNI ennemi
-ovni = pygame.image.load("ufoGreen.png")
-ovniRect = ovni.get_rect()
-ovniSpeed = 2
-posOvniX = random.randint(1, 750)
-posOvniY = 50
+# ovni = pygame.image.load("ufoGreen.png")
+# ovniRect = ovni.get_rect()
+# posOvniX = random.randint(1, 750)
+# posOvniY = 50
+# ovniSpeed = 3
+
+
+ovni = [] # Image
+ovniRect = [] # Rect
+posOvniX = [] # pos x
+posOvniY = [] # pos y
+ovniSpeed = [] # tableau de vitesse pour chaque ovni
+nbOvni = 4
+
+# Boucle de génération des OVNI
+for i in range(nbOvni):
+    ovni.append(pygame.image.load("ufoGreen.png"))
+    ovniRect.append(ovni[i].get_rect())
+    posOvniX.append(random.randint(1, 750))
+    posOvniY.append(random.randint(0, 300))
+    ovniSpeed.append(3)
+
 
 # Fonction de detection de collision
 def collision(rectA, rectB):
@@ -113,23 +130,23 @@ while running:
     if posLaserY < -40:
         canShoot = True
 
-    # Gestion de l'OVNI
-    posOvniX -= ovniSpeed
-    ovniRect.topleft = (posOvniX, posOvniY)
-    window.blit(ovni, ovniRect)
-    if posOvniX < 0 or posOvniX > 710:
-        ovniSpeed = -ovniSpeed
-        posOvniY += 50
+    # Gestion des OVNI
+    for i in range(nbOvni):
+        posOvniX[i] -= ovniSpeed[i]
+        ovniRect[i].topleft = (posOvniX[i], posOvniY[i])
+        window.blit(ovni[i], ovniRect[i])
+        if posOvniX[i] < 0 or posOvniX[i] > 710:
+            ovniSpeed[i] = -ovniSpeed[i]
+            posOvniY[i] += 50
 
-    # Detection de collision entre le laser et l'OVNI
-    if collision(laserRect, ovniRect):
-        posOvniY = 10000
-        posLaserY = -100
+        # Detection de collision entre le laser et l'OVNI
+        if collision(laserRect, ovniRect[i]):
+            posOvniY[i] = 10000
+            posLaserY = -500
 
-    # Detection de collision entre le joueur et l'OVNI
-    if collision(playerRect, ovniRect):
-        posOvniY = 10000
-        posY = - 10000
+        # Detection de collision entre le joueur et l'OVNI
+        if collision(playerRect, ovniRect[i]):
+            posX = -500
 
 
     # On dessine / mettre à jour le contenu de l'écran
