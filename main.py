@@ -47,6 +47,11 @@ posOvniY = [] # pos y
 ovniSpeed = [] # tableau de vitesse pour chaque ovni
 nbOvni = 4
 
+# Texte
+score = 0
+font = pygame.font.Font("freesansbold.ttf", 48)
+txtPos = 10
+
 # Boucle de génération des OVNI
 for i in range(nbOvni):
     ovni.append(pygame.image.load("ufoGreen.png"))
@@ -143,11 +148,15 @@ while running:
         if collision(laserRect, ovniRect[i]):
             posOvniY[i] = 10000
             posLaserY = -500
+            score += 1
 
         # Detection de collision entre le joueur et l'OVNI
         if collision(playerRect, ovniRect[i]):
             posX = -500
 
+    # Affichage du score
+    scoreTxt = font.render("Score : " + str(score), True, (255, 255, 255))
+    window.blit(scoreTxt, (txtPos, txtPos))
 
     # On dessine / mettre à jour le contenu de l'écran
     pygame.display.flip()
