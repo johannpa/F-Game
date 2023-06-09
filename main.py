@@ -2,6 +2,8 @@ import random
 # Importation de pygame
 import pygame
 
+from pygame import mixer
+
 # Initialisation de pygame
 pygame.init()
 
@@ -51,6 +53,10 @@ nbOvni = 4
 score = 0
 font = pygame.font.Font("freesansbold.ttf", 48)
 txtPos = 10
+
+# Musique
+# mixer.music.load("background.wav")
+# mixer.music.play(-1)
 
 # Boucle de génération des OVNI
 for i in range(nbOvni):
@@ -109,6 +115,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             # De quelle touche s'agit-il ?
             if event.key == pygame.K_SPACE and canShoot:
+                laserSfx = mixer.Sound("sfx_laser.ogg")
+                laserSfx.play()
                 canShoot = False
                 # Position du laser
                 posLaserX = posX + 45
